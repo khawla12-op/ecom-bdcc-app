@@ -6,14 +6,16 @@ import { AppComponent } from './app.component';
 import { ProductsComponent } from './ui/products/products.component';
 import { CustomersComponent } from './ui/customers/customers.component';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {KeycloakService} from 'keycloak-angular';
+import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
         url: 'http://localhost:8080',
         realm: 'bdcc-realm',
-        clientId: 'ecom-client-ang'
+        clientId: 'ecom-client-ang',
+
+
       },
       initOptions: {
         onLoad: 'check-sso',
@@ -32,7 +34,8 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    KeycloakAngularModule
   ],
   providers: [
     {
