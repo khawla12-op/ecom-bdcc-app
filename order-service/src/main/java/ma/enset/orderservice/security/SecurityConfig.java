@@ -25,11 +25,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JwtDecoder jwtDecoder() {
-        // This is a no-op implementation that essentially bypasses JWT decoding
-        return token -> null;
-    }
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .cors(Customizer.withDefaults())
@@ -37,8 +32,9 @@ public class SecurityConfig {
                 .csrf(csrf-> csrf.disable())
                 //autoriser les frames qui se trouvent dans h2-console
                 .headers(h->h.frameOptions(fo->fo.disable()))
-                .authorizeHttpRequests(ar->ar.requestMatchers("/api/products/**","/h2-console/**").permitAll())
-//               .authorizeHttpRequests(ar->ar.requestMatchers("/api/products/**").hasAuthority("ADMIN"))
+//                .authorizeHttpRequests(ar->ar.requestMatchers("/api/orders/**","/h2-console/**","/swagger-ui.html","/v3/**","/api-docs","/swagger-ui/**").permitAll())
+                .authorizeHttpRequests(ar->ar.requestMatchers("/h2-console/**","/swagger-ui.html","/v3/**","/api-docs","/swagger-ui/**").permitAll())
+
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 //Il faut ajouter cette ligne pour securiser le backend:
                 .oauth2ResourceServer(o2->o2.jwt(jwt->jwt.jwtAuthenticationConverter(jwtAuthConverter)))

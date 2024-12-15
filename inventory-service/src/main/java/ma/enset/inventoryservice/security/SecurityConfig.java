@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf(csrf-> csrf.disable())
                 //autoriser les frames qui se trouvent dans h2-console
                 .headers(h->h.frameOptions(fo->fo.disable()))
-                .authorizeHttpRequests(ar->ar.requestMatchers("/api/products/**","/h2-console/**").permitAll())
+                .authorizeHttpRequests(ar->ar.requestMatchers("/h2-console/**").permitAll())
 //                .authorizeHttpRequests(ar->ar.requestMatchers("/api/products/**").hasAuthority("ADMIN"))
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
                 //Il faut ajouter cette ligne pour securiser le backend:

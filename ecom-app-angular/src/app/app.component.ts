@@ -21,13 +21,22 @@ export class AppComponent implements OnInit{
     }
   }
 
+
   async handleLogin() {
-    await this.keycloakService.login({
-      redirectUri: window.location.origin
-    });
+    try {
+      await this.keycloakService.login({
+        redirectUri: window.location.origin // Redirect back to current page after login
+      });
+    } catch (error) {
+      console.error('Login error', error);
+    }
   }
 
-  handlelogout() {
-     this.keycloakService.logout(window.location.origin);
+  async handlelogout() {
+    try {
+      await this.keycloakService.logout(window.location.origin);
+    } catch (error) {
+      console.error('Logout error', error);
+    }
   }
 }
